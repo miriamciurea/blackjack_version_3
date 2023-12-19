@@ -7,3 +7,41 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+puts "Cleaning database..."
+
+Group.destroy_all
+User.destroy_all
+Dare.destroy_all
+Game.destroy_all
+Member.destroy_all
+
+puts "Database cleaned!"
+
+puts "Creating some users..."
+
+User.create(email: "miriam@email.com", nickname: "miriam", score: "0", password: "123456")
+User.create(email: "serban@email.com", nickname: "serban", score: "0", password: "123456")
+User.create(email: "ecem@email.com", nickname: "ecem", score: "0", password: "123456")
+User.create(email: "alex@email.com", nickname: "alex", score: "0", password: "123456")
+
+puts "Users created!"
+
+puts "Creating groups..."
+
+Group.create(user_id: User.find_by(nickname: "miriam"), name: "Miriam's group", max_members: 3)
+Group.create(user_id: User.find_by(nickname: "serban"), name: "The best group", max_members: 4)
+Group.create(user_id: User.find_by(nickname: "ecem"), name: "Friends", max_members: 5)
+
+puts "Groups created!"
+
+puts "Putting members in groups..."
+
+Member.create(user_id: User.find_by(nickname: "Alex"), group_id: Group.find_by(name: "Miriam's group"))
+Member.create(user_id: User.find_by(nickname: "Serban"), group_id: Group.find_by(name: "Miriam's group"))
+Member.create(user_id: User.find_by(nickname: "Alex"), group_id: Group.find_by(name: "Friends"))
+Member.create(user_id: User.find_by(nickname: "Miriam"), group_id: Group.find_by(name: "Friends"))
+
+puts "You have to have some dares also..don't forget"
+
+puts "Seed is seeded!"

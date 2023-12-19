@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_18_142423) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_18_142415) do
   create_table "dares", force: :cascade do |t|
     t.integer "member_id", null: false
     t.string "name"
@@ -55,9 +55,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_18_142423) do
     t.datetime "updated_at", null: false
     t.string "nickname"
     t.integer "score"
-    t.integer "member_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["member_id"], name: "index_users_on_member_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -66,5 +64,4 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_18_142423) do
   add_foreign_key "groups", "users"
   add_foreign_key "members", "groups"
   add_foreign_key "members", "users"
-  add_foreign_key "users", "members"
 end
