@@ -29,18 +29,18 @@ puts "Users created!"
 
 puts "Creating groups..."
 
-Group.create(user_id: User.find_by(nickname: "miriam"), name: "Miriam's group", max_members: 3)
-Group.create(user_id: User.find_by(nickname: "serban"), name: "The best group", max_members: 4)
-Group.create(user_id: User.find_by(nickname: "ecem"), name: "Friends", max_members: 5)
+Group.create(user_id: User.find_by(nickname: "miriam").id, name: "Miriam's group", max_members: 3)
+Group.create(user_id: User.find_by(nickname: "serban").id, name: "The best group", max_members: 4)
+Group.create(user_id: User.find_by(nickname: "ecem").id, name: "Friends", max_members: 5)
 
 puts "Groups created!"
 
 puts "Putting members in groups..."
 
-Member.create(user_id: User.find_by(nickname: "Alex"), group_id: Group.find_by(name: "Miriam's group"))
-Member.create(user_id: User.find_by(nickname: "Serban"), group_id: Group.find_by(name: "Miriam's group"))
-Member.create(user_id: User.find_by(nickname: "Alex"), group_id: Group.find_by(name: "Friends"))
-Member.create(user_id: User.find_by(nickname: "Miriam"), group_id: Group.find_by(name: "Friends"))
+Member.create(user_id: User.find_by(nickname: "alex").id, group_id: Group.find_by(name: "Miriam's group").id)
+Member.create(user_id: User.find_by(nickname: "serban").id, group_id: Group.find_by(name: "Miriam's group").id)
+Member.create(user_id: User.find_by(nickname: "alex").id, group_id: Group.find_by(name: "Friends").id)
+Member.create(user_id: User.find_by(nickname: "miriam").id, group_id: Group.find_by(name: "Friends").id)
 
 puts "You have to have some dares also..don't forget"
 
