@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :users do
+    get "solo_game", to: "game#solo_game"
     resources :groups, only: [:new, :create, :edit, :update, :destroy, :show] do
       resources :members, only: [:new, :create]
       end
@@ -24,6 +25,5 @@ Rails.application.routes.draw do
   resources :dares
   end
 
-  get "solo_game", to: "game#solo_game"
 
 end
