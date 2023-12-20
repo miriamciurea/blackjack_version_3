@@ -13,17 +13,17 @@ Rails.application.routes.draw do
   resources :users do
     resources :groups, only: [:new, :create, :edit, :update, :destroy, :show] do
       resources :members, only: [:new, :create]
-      end
+    end
     end
 
     resources :groups, only: [:index, :show]
 
+    get "solo_game", to: "games#solo_game"
 
   resources :members, only: [:destroy, :show, :index] do
-  get "group_game", to: "game#group_game"
-  resources :dares
+    get "group_game", to: "games#group_game"
+    resources :dares
   end
 
-  get "solo_game", to: "game#solo_game"
 
 end
