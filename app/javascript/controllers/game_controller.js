@@ -6,8 +6,8 @@ export default class extends Controller {
 
   connect() {
 
-    console.log("hii it's me again");
-    console.log("score: ", this.scoreTarget);
+    // console.log("hii it's me again");
+    // console.log("score: ", this.scoreTarget);
     this.values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
     this.suits = ['♠', '♥', '♣', '♦'];
 
@@ -79,30 +79,44 @@ export default class extends Controller {
     // Implement determineWinner logic
     let playerValue = this.calcHandValue(this.playerHand);
     let dealerValue = this.calcHandValue(this.dealerHand);
-    this.showNotice();
-    return `${playerValue > dealerValue ? "<em>You win!</em>" : "<em>Dealer Wins!</em>"}`;
+    let text = "";
+    if (playerValue > 21) {
+      text = "You bust, <em>Dealer wins!</em>"
+    } else if (dealerValue > 21) {
+      text = "Dealer busts, <em>You win!</em>"
+    } else if (playerValue > dealerValue) {
+      text = "<em>You win!</em>";
+    } else if (playerValue < dealerValue) {
+      text = "<em>Dealer wins!</em>";
+    } else {
+      text = "<em>It's a tie!</em>";
+    }
+    this.showNotice(text);
   }
 
   hitDealer() {
-    this.hiddenCardTarget.classList.remove('hidden-card');
-    this.hiddenCardTarget.innerHTML = `<h6>${this.dealerHand[0]}</h6>`;
-    let card = this.chooseRandomCard();
-    this.dealerHand.push(card)
+    // this.hiddenCardTarget.innerHTML = `<h6>${this.dealerHand[0]}</h6>`;
 
-    let card_html = `<div class="my-card">${card}</div>`;
-    this.dealersCardsTargets.push(card_html);
 
     let handValue = this.calcHandValue(this.dealerHand);
     if (handValue <= 16) {
+      let card = this.chooseRandomCard();
+      this.dealerHand.push(card)
+
+      let card_html = `<div class="my-card">${card}</div>`;
+      this.dealersCardsTargets[0].insertAdjacentHTML('beforeend', card_html);
         this.hitDealer();
     } else if (handValue === 21) {
+      this.buttonsLogic();
         this.showNotice("Dealer has 21! Dealer wins!");
     }
     else if (handValue > 21) {
+      this.buttonsLogic();
         this.showNotice("Dealer bust! You win!");
     }
     else {
-        this.determineWinner();
+      this.determineWinner();
+      this.buttonsLogic();
     }
   }
 
@@ -115,20 +129,26 @@ export default class extends Controller {
     let card_html = `<div class="my-card">${card}</div>`;
     this.playersCardsTargets[0].insertAdjacentHTML('beforeend', card_html);
 
-    if (handValue <= 21) {
-
+    if (handValue < 21) {
+      this.score();
     } else {
-        let text = `Bust! Your hand is ${this.playerHand} with a value of ${handValue}.`;
-        this.showNotice(text);
+        // let text = `Bust! Your hand is ${this.playerHand} with a value of ${handValue}.`;
+        // this.showNotice(text);
         // this.optionsTarget.classList.add('d-none')
-        document.querySelectorAll('button').forEach((button) => {
-          button.classList.toggle('d-none');
-          // console.log(button);
-        });
-        console.log(this.dealersCardsTargets[0].querySelector('.hidden-card').classList.remove('hidden-card'));
-        // this.dealersCardsTargets[0].classList.remove('hidden-card');
+        this.score();
+        this.determineWinner();
+        this.buttonsLogic();
     }
     this.score();
+  }
+
+  buttonsLogic() {
+    document.querySelectorAll('button').forEach((button) => {
+      button.classList.toggle('d-none');
+      // console.log(button);
+    });
+    // console.log(this.dealersCardsTargets[0].querySelector('.hidden-card').classList.remove('hidden-card'));
+    this.dealersCardsTargets[0].querySelector('.hidden-card').classList.remove('hidden-card');
   }
 
   clearHands() {
@@ -146,12 +166,13 @@ export default class extends Controller {
         target.innerHTML = "";
       });
 
-    console.log("clearHands");
+    // console.log("clearHands");
     return true;
   }
 
   play() {
     // Implement play logic
+    this.scoreTarget.innerHTML = 0;
     if(this.allDecks.length < 10) {
       this.shuffleDecks()
     }
@@ -162,7 +183,7 @@ export default class extends Controller {
     this.playerHand = deal.player;
     this.dealerHand.forEach((card, index) => {
       let card_html = `<div class="my-card">${card}</div>`;
-      console.log(index);
+      // console.log(index);
         if(index == 0) {
           card_html = `<div class="my-card hidden-card">${card}</div>`;
         }
