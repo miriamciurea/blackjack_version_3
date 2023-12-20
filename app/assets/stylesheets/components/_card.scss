@@ -1,0 +1,21 @@
+.my-card {
+  background-color: #117a8b;
+    height: 220px;
+    width: 150px;
+    border-radius: 10%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+}
+
+.cards {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.hidden-card {
+  background-color: black;
+  color: black;
+}
