@@ -1,8 +1,8 @@
 <%= simple_form_for(@group) do |f| %>
   <%= f.input :name %>
   <%= f.input :max_members %>
-  <%# <%= f.collection_select(:user_ids, User.all, :id, :email, { }, { multiple: true, class: 'select2' }) %> %>
-  <%= f.input :user_ids, as: :select, collection: User.all, label_method: :email, value_method: :id, input_html: { multiple: true, class: 'select2' } %>
-
+  <%#= f.collection_select(:user_ids, User.all, :id, :nickname, { }, { multiple: true, class: 'select2' }) %>
+  <%#= f.input :user_ids, as: :select, collection: User.all, label_method: :email, value_method: :id, input_html: { multiple: true, class: 'select2' } %>
+  <%= f.collection_select(:user_ids, User.all, :id, :nickname, {}, { multiple: true }) %>
   <%= f.submit %>
 <% end %>
