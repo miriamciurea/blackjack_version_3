@@ -14,6 +14,7 @@ export default class extends Controller {
     this.allDecks = [];
     this.dealerHand = [];
     this.playerHand = [];
+    this.points = 0;
 
     this.play();
   }
@@ -82,16 +83,21 @@ export default class extends Controller {
     let text = "";
     if (playerValue > 21) {
       text = "You bust, <em>Dealer wins!</em>"
+      this.points -= 1;
     } else if (dealerValue > 21) {
       text = "Dealer busts, <em>You win!</em>"
+      this.points += 1;
     } else if (playerValue > dealerValue) {
       text = "<em>You win!</em>";
+      this.points += 1;
     } else if (playerValue < dealerValue) {
       text = "<em>Dealer wins!</em>";
+      this.points -= 1;
     } else {
       text = "<em>It's a tie!</em>";
     }
     this.showNotice(text);
+    this.updateScore();
   }
 
   hitDealer() {
@@ -215,5 +221,29 @@ export default class extends Controller {
 // I think we just get rid of this
   onNextHand() {
     this.play();
+  }
+
+  async updateScore() {
+    const newPoints = this.points;
+
+    try {
+      const response = await fetch("/update_score", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": document.querySelector("meta[name=csrf-token]").content,
+        },
+        body: JSON.stringify({ new_points: newPoints }),
+      });
+
+      if (response.ok) {
+        console.log("Score updated successfully!");
+        // Handle any additional logic after a successful update
+      } else {
+        console.error("Failed to update score.");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   }
 }

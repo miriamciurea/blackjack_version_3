@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :groups, only: [:index, :show]
 
     get "solo_game", to: "games#solo_game"
+    patch "/update_score", to: "games#update_score"
 
   resources :members, only: [:destroy, :show, :index] do
     get "group_game", to: "games#group_game"
