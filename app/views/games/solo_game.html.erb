@@ -1,28 +1,31 @@
 <div class="container" data-controller="game">
   <div class="header">
-    <h4>Let's play!</h4>
+    <h4 data-game-target="notice">Let's play!</h4>
       <div class="both-hands">
         <div class="dealer-cards">
           <div class="who-is-playing">
             <h4>Dealer's hand</h4>
           </div>
-              <div class="cards">
-                <div class="card hidden-card", data-game-target="hiddenCard" >
-                  <h6>idk</h6>
+              <div class="cards" data-game-target="dealersCards">
+                <%# <div class="my-card hidden-card", data-game-target="hiddenCard" > %>
+                  <h6></h6>
                 </div>
-                <%= render "components/card", locals: { stimulus_target: "dealersCards" } %>
+                <%#= render "components/card"%>
               </div>
         </div>
         <div class="player-cards">
           <div class="who-is-playing">
             <h4>Your hand</h4>
           </div>
-          <div class="cards">
-            <%= render "components/card", locals: { stimulus_target: "playersCards" }%>
+          <div class="cards" data-game-target="playersCards">
+            <%#= render "components/card"%>
+            <%#= render "components/card", locals: { stimulus_target: "playersCards" }%>
           </div>
-          <div class="options">
+          <div class="options" data-game-target="options">
             <button class="hit" data-action="click->game#hitPlayer">HIT</button>
             <button class="pass" data-action="click->game#hitDealer">PASS</button>
+            <button class="replay d-none" data-action="click->game#replay">REPLAY</button>
+          </div>
           </div>
         </div>
       </div>

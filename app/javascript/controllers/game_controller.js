@@ -2,12 +2,12 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="game"
 export default class extends Controller {
-  static targets = ["dealer", "player", "hit", "pass", "buttonContainer", "notice", "nextHand", "hiddenCard", "dealersCards", "playersCards"];
+  static targets = ["dealer", "player", "hit", "pass", "buttonContainer", "nextHand", "hiddenCard", "dealersCards", "playersCards", "notice", "options"];
 
   connect() {
 
     console.log("hii it's me again");
-    console.log("players cards: ", this.playersCardsTargets);
+    console.log("options: ", this.optionsTarget);
     this.values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
     this.suits = ['♠', '♥', '♣', '♦'];
 
@@ -72,7 +72,7 @@ export default class extends Controller {
   showNotice(text) {
     // Implement showNotice logic
     // tell me you do something that I understand at least half of it thanks
-    //  ??????????????????????????????????????????????????????
+    this.noticeTarget.innerHTML = text;
   }
 
   determineWinner() {
@@ -84,14 +84,12 @@ export default class extends Controller {
   }
 
   hitDealer() {
-    // Implement hitDealer logic
     this.hiddenCardTarget.classList.remove('hidden-card');
-    // insert actual HTML
     this.hiddenCardTarget.innerHTML = `<h6>${this.dealerHand[0]}</h6>`;
     let card = this.chooseRandomCard();
     this.dealerHand.push(card)
 
-    let card_html = `<div class="card">${card}</div>`;
+    let card_html = `<div class="my-card">${card}</div>`;
     this.dealersCardsTargets.push(card_html);
 
     let handValue = this.calcHandValue(this.dealerHand);
@@ -114,21 +112,41 @@ export default class extends Controller {
     this.playerHand.push(card);
     let handValue = this.calcHandValue(this.playerHand);
 
-    let card_html = `<div class="card">${card}</div>`;
-    this.playersCardsTargets.push(card_html);
+    let card_html = `<div class="my-card">${card}</div>`;
+    this.playersCardsTargets[0].insertAdjacentHTML('beforeend', card_html);
 
     if (handValue <= 21) {
 
     } else {
         let text = `Bust! Your hand is ${this.playerHand} with a value of ${handValue}.`;
         this.showNotice(text);
+        // this.optionsTarget.classList.add('d-none')
+        document.querySelectorAll('button').forEach((button) => {
+          button.classList.toggle('d-none');
+          // console.log(button);
+        });
+        console.log(this.dealersCardsTargets[0].querySelector('.hidden-card').classList.remove('hidden-card'));
+        // this.dealersCardsTargets[0].classList.remove('hidden-card');
     }
+
   }
 
   clearHands() {
     // Implement clearHands logic
-    this.playersCardsTargets.innerHTML = "";
-    this.dealersCardsTargets.innerHTML = "";
+    // this.playersCardsTargets.innerHTML = "";
+    // this.dealersCardsTargets.innerHTML = "";
+    // Clear the inner HTML of each player card target
+      this.playersCardsTargets.forEach((target) => {
+        target.innerHTML = "";
+      });
+
+
+    // Clear the inner HTML of each dealer card target
+      this.dealersCardsTargets.forEach((target) => {
+        target.innerHTML = "";
+      });
+
+    console.log("clearHands");
     return true;
   }
 
@@ -136,22 +154,35 @@ export default class extends Controller {
     // Implement play logic
     if(this.allDecks.length < 10) {
       this.shuffleDecks()
-      this.clearHands()
     }
+    this.clearHands()
+
     let deal =  this.dealHands();
     this.dealerHand = deal.dealer;
     this.playerHand = deal.player;
     this.dealerHand.forEach((card, index) => {
-        let card_html = `<div class="card">${card}</div>`;
-        // this.dealersCardsTargets.insertAdjacentHTML('beforeend', card_html);
-        this.dealersCardsTargets.push(card_html);
+      let card_html = `<div class="my-card">${card}</div>`;
+      console.log(index);
+        if(index == 0) {
+          card_html = `<div class="my-card hidden-card">${card}</div>`;
+        }
+        this.dealersCardsTargets[0].insertAdjacentHTML('beforeend', card_html);
     })
     this.playerHand.forEach((card) => {
-      let card_html = `<div class="card">${card}</div>`;
-      // this.playersCardsTargets.insertAdjacentHTML('beforeend', card_html);
-      this.playersCardsTargets.push(card_html);
+      let card_html = `<div class="my-card">${card}</div>`;
+      this.playersCardsTargets[0].insertAdjacentHTML('beforeend', card_html);
+      // this.playersCardsTargets.push(card_html);
     })
     // buttonContainer.style.display = "block"
+  }
+
+  replay() {
+    document.querySelectorAll('button').forEach((button) => {
+      button.classList.toggle('d-none');
+      // console.log(button);
+    })
+    this.showNotice("Let's play!")
+    this.play()
   }
 
 
