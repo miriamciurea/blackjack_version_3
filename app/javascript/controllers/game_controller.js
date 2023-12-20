@@ -7,7 +7,7 @@ export default class extends Controller {
   connect() {
 
     console.log("hii it's me again");
-    console.log("dealers cards: ", this.dealersCardsTargets);
+    console.log("players cards: ", this.playersCardsTargets);
     this.values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
     this.suits = ['♠', '♥', '♣', '♦'];
 
@@ -59,7 +59,7 @@ export default class extends Controller {
     let value = 0;
     let hasAce = false;
     hand.forEach((card) => {
-      console.log(card);
+      // console.log(card);
       let cardValue = card.length === 2 ? card.substring(0, 1) : card.substring(0, 2);
       if (cardValue === 'A') hasAce = true;
       else if (['J', 'Q', 'K'].includes(cardValue)) value += 10;
@@ -85,16 +85,16 @@ export default class extends Controller {
 
   hitDealer() {
     // Implement hitDealer logic
-    this.hiddenCardTargets.classList.remove('hidden-card');
+    this.hiddenCardTarget.classList.remove('hidden-card');
     // insert actual HTML
-    this.hiddenCardTargets.innerHTML = `<h6>${this.dealerHand[0]}</h6>`;
-    let card = chooseRandomCard();
-    dealerHand.push(card)
+    this.hiddenCardTarget.innerHTML = `<h6>${this.dealerHand[0]}</h6>`;
+    let card = this.chooseRandomCard();
+    this.dealerHand.push(card)
 
     let card_html = `<div class="card">${card}</div>`;
-    this.dealersCards.insertAdjacentHTML('beforeend', card_html);
+    this.dealersCardsTargets.push(card_html);
 
-    let handValue = calcHandValue(this.dealerHand);
+    let handValue = this.calcHandValue(this.dealerHand);
     if (handValue <= 16) {
         this.hitDealer();
     } else if (handValue === 21) {
@@ -110,18 +110,18 @@ export default class extends Controller {
 
   hitPlayer() {
     // Implement hitPlayer logic
-    let card = chooseRandomCard();
+    let card = this.chooseRandomCard();
     this.playerHand.push(card);
-    let handValue = calcHandValue(this.playerHand);
+    let handValue = this.calcHandValue(this.playerHand);
 
     let card_html = `<div class="card">${card}</div>`;
-    this.dealersCards.insertAdjacentHTML('beforeend', card_html);
+    this.playersCardsTargets.push(card_html);
 
     if (handValue <= 21) {
 
     } else {
-        let text = `Bust! Your hand is ${playerHand} with a value of ${handValue}.`;
-        showNotice(text);
+        let text = `Bust! Your hand is ${this.playerHand} with a value of ${handValue}.`;
+        this.showNotice(text);
     }
   }
 
