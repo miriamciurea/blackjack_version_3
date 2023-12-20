@@ -2,12 +2,12 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="game"
 export default class extends Controller {
-  static targets = ["dealer", "player", "hit", "pass", "buttonContainer", "nextHand", "hiddenCard", "dealersCards", "playersCards", "notice", "options"];
+  static targets = ["dealer", "player", "hit", "pass", "buttonContainer", "nextHand", "hiddenCard", "dealersCards", "playersCards", "notice", "options", "score"];
 
   connect() {
 
     console.log("hii it's me again");
-    console.log("options: ", this.optionsTarget);
+    console.log("score: ", this.scoreTarget);
     this.values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
     this.suits = ['♠', '♥', '♣', '♦'];
 
@@ -128,7 +128,7 @@ export default class extends Controller {
         console.log(this.dealersCardsTargets[0].querySelector('.hidden-card').classList.remove('hidden-card'));
         // this.dealersCardsTargets[0].classList.remove('hidden-card');
     }
-
+    this.score();
   }
 
   clearHands() {
@@ -174,6 +174,7 @@ export default class extends Controller {
       // this.playersCardsTargets.push(card_html);
     })
     // buttonContainer.style.display = "block"
+    this.score();
   }
 
   replay() {
@@ -183,6 +184,10 @@ export default class extends Controller {
     })
     this.showNotice("Let's play!")
     this.play()
+  }
+
+  score() {
+    this.scoreTarget.innerHTML = this.calcHandValue(this.playerHand);
   }
 
 
