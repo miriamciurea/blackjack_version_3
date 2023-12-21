@@ -22,4 +22,9 @@ class UsersController < ApplicationController
   def create
   end
 
+  def search
+    @users = User.where('nickname LIKE ?', "%#{params[:query]}%")
+    render json: @users
+  end
+
 end

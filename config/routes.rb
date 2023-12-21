@@ -11,10 +11,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   resources :users do
+    collection do
+      get 'search'
+    end
     resources :groups, only: [:new, :create, :edit, :update, :destroy, :show] do
       resources :members, only: [:new, :create]
     end
-    end
+  end
 
     resources :groups, only: [:index, :show]
 
