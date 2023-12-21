@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="group-name">
+    <h5><%= @group.name %></h5>
+  </div>
+  <div class="members">
+    <p>Admin: <strong><%= link_to User.find(@group.user_id).nickname, user_path(User.find(@group.user_id).id) %></strong></p>
+    <h6>Members: </h6>
+    <ul>
+      <% @group.member_ids.each do |member_id| %>
+        <li><%= link_to User.find(Member.find(member_id).user_id).nickname, user_path(User.find(Member.find(member_id).user_id).id) %></li>
+      <% end %>
+    </ul>
+    <% if @group.member_ids.size < @group.max_members %>
+      <p>Would you like to join? <% link_to  do %>
+      <i class="fa-solid fa-circle-plus"></i>
+      <% end %>
+      <% end %>
+      </p>
+
+
+  </div>
+</div>
