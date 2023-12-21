@@ -6,7 +6,6 @@ class GroupsController < ApplicationController
   end
 
   def create
-    raise
     @group = Group.find(params[:group_id])
     @member = Member.new
     @card.brand = @brand
@@ -17,6 +16,7 @@ class GroupsController < ApplicationController
   end
 
   def show
+    @group = Group.find(params[:id])
   end
 
   def edit

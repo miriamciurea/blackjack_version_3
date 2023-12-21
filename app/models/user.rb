@@ -14,7 +14,7 @@ class User < ApplicationRecord
   validates :nickname, length: { minimum: 3 }
   validates :nickname, uniqueness: true
 
-  has_and_belongs_to_many :groups, join_table: 'membership'
+  has_and_belongs_to_many :groups, join_table: 'member'
   has_many :members, dependent: :destroy
   has_many :groups, through: :members, dependent: :destroy
   # A User has many created_groups representing the groups they have created.
