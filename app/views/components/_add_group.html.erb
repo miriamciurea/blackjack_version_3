@@ -1,8 +1,18 @@
-<%= simple_form_for(@group) do |f| %>
+<!-- Your form file, e.g., app/views/groups/_form.html.erb -->
+<%#= simple_form_for(@group, data: { controller: 'group-form' }, url: user_group_members_url(params[:group_id]), method: :post) do |f| %>
+<%#= simple_form_for([@group, Member.new], data: { controller: 'group-form' }, url: user_group_members_url(@group), method: :post) do |f| %>
+<%= form_with(model: [group.user, group], url: user_group_members_path(group.user, group), method: :post, data: { controller: 'group-form' }) do |f| %>
+
   <%= f.input :name %>
   <%= f.input :max_members %>
-  <%#= f.collection_select(:user_ids, User.all, :id, :nickname, { }, { multiple: true, class: 'select2' }) %>
-  <%#= f.input :user_ids, as: :select, collection: User.all, label_method: :email, value_method: :id, input_html: { multiple: true, class: 'select2' } %>
-  <%= f.collection_select(:user_ids, User.all, :id, :nickname, {}, { multiple: true }) %>
+
+  <label for="user-search">Search Users:</label>
+  <input type="text" id="user-search" autocomplete="off" data-group-form-target="searchInput">
+
+  <label for="user-list">Selected Users:</label>
+  <select id="user-list" multiple data-group-form-target="userList" data-action="change->group-form#updateUserList"></select>
+
+  <%= f.hidden_field :user_ids, id: nil, data: { target: 'group-form.hiddenInput' } %>
+
   <%= f.submit %>
 <% end %>
