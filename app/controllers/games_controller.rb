@@ -11,4 +11,7 @@ class GamesController < ApplicationController
     render json: { status: "success" }
   end
 
+  def game_interface
+  end
+
 end
