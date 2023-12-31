@@ -5,6 +5,10 @@ class GroupsController < ApplicationController
     @users = User.all
   end
 
+  def index
+    @groups = Group.all
+  end
+
   def create
     @group = Group.find(params[:group_id])
     @member = Member.new

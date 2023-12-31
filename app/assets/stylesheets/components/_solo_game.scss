@@ -1,0 +1,58 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 21px;
+  border: solid;
+  padding: 18px;
+}
+
+.container {
+  height: 1000px;
+  width: auto;
+  /* Add a border to see if the container is visible */
+  // background-image: url("../../images/green_casino.png");
+  background-color: #16361d;
+}
+
+
+button {
+  background-color: #552828;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: .75rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+// ../../images/green_casino.png
+
+.score {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 25px;
+  margin-bottom: 1rem;
+  margin-right: 36px;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  column-gap: 39px;
+}
+
+.show-user {
+  text-align: left;
+  margin-left: 30px;
+  margin-top: 20px;
+}

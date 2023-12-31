@@ -1,4 +1,4 @@
-<div class="container">
+<div class="show-user">
   <div class="group-name">
     <h5><%= @group.name %></h5>
   </div>
@@ -6,15 +6,21 @@
     <p>Admin: <strong><%= link_to User.find(@group.user_id).nickname, user_path(User.find(@group.user_id).id) %></strong></p>
     <h6>Members: </h6>
     <ul>
+    <% if @group.member_ids.size == 0 %>
+      <li>none</li>
+      <% else %>
       <% @group.member_ids.each do |member_id| %>
         <li><%= link_to User.find(Member.find(member_id).user_id).nickname, user_path(User.find(Member.find(member_id).user_id).id) %></li>
       <% end %>
+      <% end %>
     </ul>
-    <% if @group.member_ids.size < @group.max_members %>
-      <p>Would you like to join? <% link_to  do %>
-      <i class="fa-solid fa-circle-plus"></i>
+      <% if @group.members.size < @group.max_members %>
+      <%= link_to 'Join Group', user_group_members_path(current_user.id, @group.id), data: { turbo_method: :post } %>
+
+        <%#= link_to "Join Group", user_group_members_path(current_user.id, @group.id), method: :post %>
       <% end %>
-      <% end %>
+      <%# end %>
+      <%# end %>
       </p>
 
 

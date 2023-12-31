@@ -35,6 +35,7 @@ export default class extends Controller {
   shuffleDecks() {
     // Implement shuffleDecks logic
     this.allDecks = Array.from({ length: 4 }, () => this.createDeck()).flat();
+
     return this.allDecks;
   }
 

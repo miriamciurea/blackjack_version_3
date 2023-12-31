@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       get 'search'
     end
     resources :groups, only: [:new, :create, :edit, :update, :destroy, :show] do
-      resources :members, only: [:new, :create]
+      resources :members, only: [:create]
     end
   end
 
