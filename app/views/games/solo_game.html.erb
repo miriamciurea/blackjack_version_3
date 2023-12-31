@@ -1,6 +1,7 @@
-<div class="container" data-controller="game">
-  <div class="header">
+<div class="container" data-controller="game" style="background-image: green_casino.png;">
+  <div class="header mb-3">
     <h4 data-game-target="notice">Let's play!</h4>
+    </div>
       <div class="both-hands">
         <div class="dealer-cards">
           <div class="who-is-playing">
@@ -13,7 +14,7 @@
                 <%#= render "components/card"%>
               </div>
         </div>
-        <div class="player-cards">
+        <div class="player-cards mt-5">
           <div class="who-is-playing">
             <h4>Your hand</h4>
           </div>
@@ -21,17 +22,14 @@
             <%#= render "components/card"%>
             <%#= render "components/card", locals: { stimulus_target: "playersCards" }%>
           </div>
+          <div class="score">
+            <p>Points: <strong data-game-target="score"></strong></p>
+          </div>
           <div class="options" data-game-target="options">
             <button class="hit" data-action="click->game#hitPlayer">HIT</button>
             <button class="pass" data-action="click->game#hitDealer">PASS</button>
             <button class="replay d-none" data-action="click->game#replay">REPLAY</button>
           </div>
           </div>
-        </div>
-      <div class="score">
-        <h6>Points: <strong data-game-target="score"></strong></h6>
-      </div>
       <%# My score: <%= @score %>
-  </div>
 </div>
-      </div>

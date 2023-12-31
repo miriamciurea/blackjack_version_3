@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ['searchInput', 'userList', 'hiddenInput'];
 
   connect() {
-    this.searchInputTarget.addEventListener('input', this.handleInput.bind(this));
+    // this.searchInputTarget.addEventListener('input', this.handleInput.bind(this));
   }
 
   handleInput() {
